@@ -1,0 +1,332 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: clamp(6rem, 12vh, 9rem);
+  padding-bottom: 5rem;
+  position: relative;
+  max-width: none;
+  overflow: hidden;
+}
+
+/* Dual ambient glow mesh — electric blue upper-right, softer sky-blue
+   lower-left. Purely atmospheric: neither hue is used on any text,
+   border, or control directly, so the accent still reads as the
+   one interactive signal color on the page — both orbs simply stay
+   within the same blue family for depth. */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__glow::before,
+.hero__glow::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+.hero__glow::before {
+  top: -22%;
+  right: -14%;
+  width: min(62vw, 780px);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle,
+    rgba(77, 163, 255, 0.22) 0%,
+    rgba(77, 163, 255, 0.07) 45%,
+    transparent 72%
+  );
+}
+
+.hero__glow::after {
+  bottom: -28%;
+  left: -16%;
+  width: min(48vw, 620px);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle,
+    rgba(143, 224, 255, 0.16) 0%,
+    rgba(143, 224, 255, 0.05) 45%,
+    transparent 70%
+  );
+}
+
+.hero__grid,
+.hero__scroll {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+  max-width: 1240px;
+}
+
+.hero__kicker {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hero__kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px 2px var(--accent-glow);
+}
+
+.hero__name {
+  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+  line-height: 1.08;
+  max-width: 15ch;
+  background: var(--hero-name-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__intro {
+  margin-top: 1.75rem;
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.hero__photo-wrap {
+  position: relative;
+  width: min(420px, 88vw);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The ring exactly fills the wrap (instead of being sized off a
+   separate formula), so it can never end up larger than its container
+   or drift out of sync with the photo underneath it. Thicker border +
+   a shorter rotation cycle keep the spin clearly perceptible without
+   feeling frantic. */
+.hero__ring--dashed {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px dashed var(--border-strong);
+  animation: ring-spin 22s linear infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hero__photo-circle {
+  position: relative;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(
+    from 180deg,
+    var(--accent-fill) 0deg,
+    transparent 110deg,
+    transparent 250deg,
+    var(--accent-fill) 360deg
+  );
+  box-shadow: var(--shadow-m);
+}
+
+.hero__photo,
+.hero__photo-fallback {
+  border: 5px solid var(--bg-soft);
+  box-sizing: border-box;
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.hero__photo-fallback {
+  display: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 3.4rem;
+  color: var(--accent);
+  background: linear-gradient(155deg, var(--surface-2), var(--bg-soft));
+}
+
+.hero__chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--glass-chip);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-s);
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.hero__chip--top {
+  top: 6%;
+  right: 4%;
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  animation: chip-float 6s ease-in-out infinite;
+}
+
+.hero__chip--bottom {
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: chip-float 6s ease-in-out infinite 0.4s;
+}
+
+.hero__chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px 2px var(--accent-glow);
+  flex-shrink: 0;
+}
+
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.hero__chip--bottom {
+  animation-name: chip-float-x;
+}
+
+@keyframes chip-float-x {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 4.5rem;
+  color: var(--text-faint);
+  font-size: 0.82rem;
+  width: fit-content;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.hero__scroll:hover {
+  color: var(--accent);
+  transform: translateY(2px);
+}
+
+@media (max-width: 900px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  /* Sized as its own value (not inherited from the desktop rule) and
+     given real top/bottom margin instead of padding, so the ring's
+     full circle — plus the floating chips — has guaranteed clear
+     space and can't overlap the heading above or the intro text
+     below. Comfortably larger than the desktop-derived size would be,
+     while staying well clear of the viewport edge at every phone
+     width down to the smallest breakpoint below. */
+  .hero__photo-wrap {
+    order: -1;
+    width: min(340px, 82vw);
+    margin: 0 auto 2.25rem;
+  }
+
+  .hero {
+    padding-top: 3rem;
+    min-height: auto;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero__scroll {
+    margin-top: 3rem;
+  }
+
+  .hero__chip {
+    font-size: 0.72rem;
+    padding: 0.4rem 0.75rem;
+  }
+}
+
+/* Smallest phones: still sized generously, just trimmed enough that
+   the wrap (and the "MERN" chip inside it) always has verified clear
+   space to the screen edge. */
+@media (max-width: 380px) {
+  .hero__photo-wrap {
+    width: min(300px, 80vw);
+  }
+
+  .hero__chip {
+    font-size: 0.68rem;
+    padding: 0.36rem 0.65rem;
+    gap: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__ring--dashed,
+  .hero__chip--top,
+  .hero__chip--bottom {
+    animation: none;
+  }
+}

@@ -1,0 +1,155 @@
+.projects {
+  position: relative;
+}
+
+.projects::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-strong) 20%,
+    var(--border-strong) 80%,
+    transparent
+  );
+}
+
+.projects__list {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.project-card {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-s);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: border-color 0.35s var(--ease), transform 0.25s var(--ease),
+    box-shadow 0.35s var(--ease);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.project-card:hover {
+  border-color: var(--project-accent, var(--accent-dim));
+  box-shadow: 0 0 0 1px var(--project-accent, var(--accent)),
+    0 22px 48px -20px var(--project-accent, var(--accent-glow));
+}
+
+.project-card__top-bar {
+  display: block;
+  height: 4px;
+  background: var(--project-accent, var(--accent-fill));
+  flex-shrink: 0;
+}
+
+/* Editor title-bar nod, also framing each project's signature color;
+   adapts with --bg like the rest of the theme. */
+.project-card__chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.8rem 1.15rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.project-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.project-card__dot--accent {
+  background: var(--project-accent, var(--accent-fill));
+}
+
+.project-card__path {
+  margin-left: 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.74rem;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-card__body {
+  padding: 1.6rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-card__heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.project-card__heading h3 {
+  font-size: 1.28rem;
+  color: var(--text);
+}
+
+.project-card__type {
+  gap: 0.4rem;
+  border-color: color-mix(in srgb, var(--project-accent, var(--accent)) 45%, var(--border-strong));
+  color: var(--project-accent, var(--text-muted));
+}
+
+.project-card__desc {
+  margin-top: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.project-card__stack li {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.74rem;
+  color: var(--text-faint);
+  padding: 0.28rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+.project-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.6rem;
+}
+
+.project-card__links .btn {
+  padding: 0.68rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .project-card__body {
+    padding: 1.4rem 1.25rem 1.6rem;
+  }
+}

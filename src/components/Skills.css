@@ -1,0 +1,304 @@
+.skills {
+  position: relative;
+}
+
+.skills::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-strong) 20%,
+    var(--border-strong) 80%,
+    transparent
+  );
+}
+
+/* Faint blueprint dot-grid behind the whole section so the area never
+   reads as flat/empty, even before the cards load in. */
+.skills::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(148, 197, 255, 0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skills .section-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Intro row: heading + lede on the left, a stat strip on
+   the right so the top of the section is already visually balanced. ---------- */
+.skills__intro {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem;
+}
+
+.skills__intro .section-title,
+.skills__intro .section-lede {
+  margin-top: 0;
+}
+
+.skills__stats {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 1.1rem 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  background: linear-gradient(150deg, var(--surface), var(--surface-2));
+  box-shadow: var(--shadow-s);
+  white-space: nowrap;
+}
+
+.skills__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.skills__stat-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.skills__stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.skills__stat-divider {
+  width: 1px;
+  height: 30px;
+  background: var(--border-strong);
+}
+
+/* ---------- Card grid: one balanced card per category. Auto-fit keeps
+   two full-width columns on desktop (or one on narrow screens) with no
+   leftover dead track, and every card grows to fill its space. ---------- */
+.skills__groups {
+  margin-top: 2.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.skills__group {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-m);
+  background: linear-gradient(165deg, var(--surface) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-s);
+  transition: border-color 0.35s var(--ease), transform 0.3s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.skills__group:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-dim);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Soft ambient light-blue wash in the corner of each card, purely
+   decorative — keeps the cards feeling lit rather than flat. */
+.skills__group-glow {
+  position: absolute;
+  top: -40%;
+  right: -25%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--ambient-2) 0%, transparent 70%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.skills__group-head {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.skills__group-icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-strong);
+}
+
+.skills__group-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.skills__group-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.skills__group-core {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--btn-primary-text);
+  background: linear-gradient(150deg, var(--accent-fill-hover), var(--accent-fill));
+  padding: 0.18rem 0.48rem;
+  border-radius: 999px;
+}
+
+.skills__group-label {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.skills__group-note {
+  margin-top: 0.3rem;
+  font-size: 0.83rem;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+.skills__group-count {
+  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  opacity: 0.75;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+}
+
+/* Badges grow to fill the card width — a 2-item group splits the row
+   evenly instead of leaving a gap, so every card looks intentionally
+   full regardless of how many technologies it lists. */
+.skills__grid {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.skills__badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1 1 150px;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: rgba(148, 197, 255, 0.04);
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.skills__badge:hover {
+  transform: translateY(-2px);
+  border-color: var(--ring, var(--border-strong));
+  background: rgba(148, 197, 255, 0.07);
+}
+
+.skills__badge-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  border: 1px solid rgba(148, 197, 255, 0.16);
+}
+
+.skills__badge-name {
+  flex: 1;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.skills__badge-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .skills__intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .skills__stats {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .skills__groups {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .skills__stats {
+    gap: 0.9rem;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .skills__stat-num {
+    font-size: 1.25rem;
+  }
+
+  .skills__group {
+    padding: 1.4rem;
+  }
+
+  .skills__badge {
+    flex: 1 1 130px;
+    padding: 0.6rem 0.75rem;
+  }
+}

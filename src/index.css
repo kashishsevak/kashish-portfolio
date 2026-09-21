@@ -1,0 +1,474 @@
+/* ============================================================
+   Design tokens — premium dark theme
+   ------------------------------------------------------------
+   A single, confident dark canvas (not flat black) with layered
+   surfaces, a cool electric-blue signal color for every interactive
+   element, and a lighter sky-blue hue reserved strictly for
+   ambient background glow so the accent family stays entirely
+   within blue / light-blue — no warm tones anywhere.
+   ============================================================ */
+:root {
+  --bg: #070b13;
+  --bg-outer: #04060b;
+  --bg-soft: #0b111c;
+  --surface: #101825;
+  --surface-2: #182640;
+  --border: rgba(148, 197, 255, 0.09);
+  --border-strong: rgba(148, 197, 255, 0.18);
+
+  --text: #eef3fb;
+  --text-muted: #97a6c2;
+  --text-faint: #5d6d8c;
+
+  --accent: #4da3ff;
+  --accent-dim: #2f74d6;
+  --accent-fill: #3d8bff;
+  --accent-fill-hover: #7cc3ff;
+  --accent-soft: rgba(77, 163, 255, 0.1);
+  --accent-soft-strong: rgba(77, 163, 255, 0.22);
+  --accent-glow: rgba(77, 163, 255, 0.35);
+
+  /* Ambient-only — used solely for background glow/mesh, never for text,
+     borders, or interactive states. A lighter, cooler blue than the main
+     accent so depth still reads even though everything stays blue. */
+  --ambient-2: #8fe0ff;
+
+  --shadow-s: 0 2px 16px rgba(0, 0, 0, 0.35);
+  --shadow-m: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 0 1px rgba(77, 163, 255, 0.2), 0 20px 46px -18px rgba(77, 163, 255, 0.28);
+
+  /* Small set of theme-only tokens components lean on directly, so the
+     light theme below can override every visual without touching
+     component CSS. */
+  --bg-dot: rgba(255, 255, 255, 0.055);
+  --nav-glass: rgba(7, 11, 19, 0.72);
+  --glass-chip: rgba(16, 24, 37, 0.9);
+  --hero-name-gradient: linear-gradient(120deg, #ffffff 0%, #eef3fb 45%, #9fd3ff 100%);
+  --btn-primary-text: #04101f;
+
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --gutter: clamp(1.5rem, 5vw, 4.5rem);
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   Light theme — an opt-in alternate to the default dark canvas.
+   Same blue-family hues throughout (never a different accent color),
+   just inverted in lightness: airy white/blue-tinted surfaces, a
+   slightly deeper blue for the interactive signal color so it still
+   reads clearly against white, and the same soft light-blue used for
+   ambient glow. Toggled by setting data-theme="light" on <html>.
+   ============================================================ */
+:root[data-theme="light"] {
+  --bg: #f3f7fd;
+  --bg-outer: #e9f1fb;
+  --bg-soft: #e3edfa;
+  --surface: #ffffff;
+  --surface-2: #eaf2fd;
+  --border: rgba(47, 116, 214, 0.12);
+  --border-strong: rgba(47, 116, 214, 0.22);
+
+  --text: #0d1a2e;
+  --text-muted: #4b5f80;
+  --text-faint: #7488a8;
+
+  --accent: #2f74d6;
+  --accent-dim: #164a94;
+  --accent-fill: #2f74d6;
+  --accent-fill-hover: #1f5bb0;
+  --accent-soft: rgba(47, 116, 214, 0.08);
+  --accent-soft-strong: rgba(47, 116, 214, 0.15);
+  --accent-glow: rgba(47, 116, 214, 0.28);
+
+  --ambient-2: #bfe3ff;
+
+  --shadow-s: 0 2px 16px rgba(31, 63, 110, 0.1);
+  --shadow-m: 0 24px 60px -24px rgba(31, 63, 110, 0.22);
+  --shadow-glow: 0 0 0 1px rgba(47, 116, 214, 0.18), 0 20px 46px -18px rgba(47, 116, 214, 0.22);
+
+  --bg-dot: rgba(47, 116, 214, 0.09);
+  --nav-glass: rgba(255, 255, 255, 0.78);
+  --glass-chip: rgba(255, 255, 255, 0.88);
+  --hero-name-gradient: linear-gradient(120deg, #0d1a2e 0%, #1f5bb0 55%, #2f74d6 100%);
+  --btn-primary-text: #f5faff;
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg-outer);
+  background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+/* Hide the native cursor only where a custom cursor can actually track
+   the pointer (fine pointer + motion allowed). Touch devices keep the
+   system cursor/tap behaviour untouched. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--accent-soft-strong);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Scrollbar (webkit) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Lenis smooth-scroll house-keeping */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ============================================================
+   Layout shell — a boxed "windowed" canvas sitting on the dark,
+   dot-grid backdrop, wide gutters visible only on large screens.
+   ============================================================ */
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.page-frame {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(0px, 6vw, 96px);
+}
+
+.shell {
+  position: relative;
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 900px) {
+  .page-frame {
+    padding: 0;
+  }
+
+  .shell {
+    border-left: none;
+    border-right: none;
+  }
+}
+
+.section {
+  padding: clamp(3rem, 6vw, 5.5rem) var(--gutter);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-inner {
+  width: 100%;
+}
+
+/* ============================================================
+   Reveal-on-scroll (single subtle treatment, section-level only)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Shared building blocks
+   ============================================================ */
+.eyebrow-index {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+  color: var(--text-faint);
+}
+
+.eyebrow-index .idx {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.eyebrow-index .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 46px;
+}
+
+.eyebrow-index .label {
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.6vw, 2.85rem);
+  line-height: 1.12;
+  color: var(--text);
+  max-width: 16ch;
+}
+
+.section-lede {
+  margin-top: 1.1rem;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 56ch;
+  line-height: 1.75;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: var(--radius-s);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.35s var(--ease), background 0.35s var(--ease),
+    border-color 0.35s var(--ease), color 0.35s var(--ease);
+  white-space: nowrap;
+}
+
+.btn svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background: linear-gradient(150deg, var(--accent-fill-hover), var(--accent-fill));
+  color: var(--btn-primary-text);
+  box-shadow: 0 10px 28px -10px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--accent-fill-hover);
+  box-shadow: 0 16px 34px -10px var(--accent-glow);
+}
+
+.btn-ghost {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+.container-row {
+  display: grid;
+}
+
+/* ============================================================
+   Staggered children (used inside an already-revealed section:
+   rows/cards fade up in sequence via the --i custom property)
+   ============================================================ */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.stagger-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-item {
+    transition-delay: 0ms;
+  }
+}
+
+/* ============================================================
+   Scroll progress bar
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: transparent;
+  z-index: 80;
+  pointer-events: none;
+}
+
+.scroll-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent-fill));
+  transform-origin: left;
+  transition: width 0.12s linear;
+}
+
+/* ============================================================
+   Back-to-top floating button
+   ============================================================ */
+.back-to-top {
+  position: fixed;
+  right: clamp(1.1rem, 3vw, 2rem);
+  bottom: clamp(1.1rem, 3vw, 2rem);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-m);
+  z-index: 60;
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease),
+    border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-3px) scale(1);
+}
+
+@media (max-width: 900px) {
+  .back-to-top {
+    right: 1rem;
+    bottom: 1rem;
+    width: 42px;
+    height: 42px;
+  }
+}
