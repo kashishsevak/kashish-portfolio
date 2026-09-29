@@ -12,7 +12,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section contact">
-      <div ref={ref} className={`section-inner reveal ${visible ? "is-visible" : ""}`}>
+      <div ref={ref} className={`section-inner rise ${visible ? "is-visible" : ""}`}>
         <div className="eyebrow-index">
           <span className="idx">05</span>
           <span className="rule" />

@@ -9,6 +9,7 @@ import {
   TargetIcon,
 } from "./Icons";
 import useReveal from "../hooks/useReveal";
+import useSpotlight from "../hooks/useSpotlight";
 import "./About.css";
 
 const FACTS = [
@@ -22,10 +23,11 @@ const STACK = ["React.js", "Node.js", "MongoDB", "Express.js"];
 
 export default function About() {
   const [ref, visible] = useReveal();
+  const spotRef = useSpotlight();
 
   return (
     <section id="about" className="section about">
-      <div ref={ref} className={`section-inner reveal ${visible ? "is-visible" : ""}`}>
+      <div ref={ref} className={`section-inner rise ${visible ? "is-visible" : ""}`}>
         <div className="eyebrow-index">
           <span className="idx">02</span>
           <span className="rule" />
@@ -33,7 +35,7 @@ export default function About() {
         </div>
 
         <div className="about__grid">
-          <div className="about__card">
+          <div className="about__card glass spot" ref={spotRef}>
             <span className="about__status">
               <span className="about__status-dot" />
               Available for opportunities

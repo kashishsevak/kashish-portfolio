@@ -5,37 +5,50 @@
   left: 0;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 999;
   will-change: transform;
 }
 
+/* A crisp core point, blended so it stays visible on light or dark
+   surfaces alike, with a tight halo so it reads as a small light source
+   rather than a flat sprite. */
 .custom-cursor__dot {
-  width: 6px;
-  height: 6px;
-  background: var(--accent-fill, #3d8bff);
-  box-shadow: 0 0 12px 2px rgba(77, 163, 255, 0.55);
-  transition: opacity 0.2s ease, transform 0.15s ease;
+  z-index: 999;
+  width: 8px;
+  height: 8px;
+  background: var(--cursor-dot);
+  mix-blend-mode: difference;
+  box-shadow: 0 0 0 3px var(--cursor-glow);
+  transition: opacity 0.2s ease;
 }
 
+/* A soft, blurred ring that trails a half-beat behind the pointer and
+   blooms open -- rather than simply growing -- over anything interactive. */
 .custom-cursor__ring {
-  width: 34px;
-  height: 34px;
-  border: 1.4px solid rgba(77, 163, 255, 0.45);
-  background: transparent;
-  transition: width 0.28s var(--ease), height 0.28s var(--ease),
-    background 0.28s var(--ease), border-color 0.28s var(--ease),
-    opacity 0.2s ease;
+  z-index: 998;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--cursor-ring);
+  background: radial-gradient(circle, var(--cursor-glow), transparent 70%);
+  transition: width 0.4s var(--ease), height 0.4s var(--ease),
+    border-color 0.4s var(--ease), opacity 0.3s ease, background 0.4s var(--ease);
 }
 
 .custom-cursor__ring.is-hovering {
-  width: 58px;
-  height: 58px;
-  background: rgba(77, 163, 255, 0.08);
-  border-color: var(--accent-fill, #3d8bff);
+  width: 72px;
+  height: 72px;
+  border-color: var(--accent);
+  background: radial-gradient(circle, var(--accent-soft-strong), transparent 72%);
 }
 
 .custom-cursor__ring.is-active {
-  width: 26px;
-  height: 26px;
-  background: rgba(77, 163, 255, 0.16);
+  width: 30px;
+  height: 30px;
+  border-color: var(--accent-2);
+}
+
+@media (max-width: 900px) {
+  .custom-cursor__dot,
+  .custom-cursor__ring {
+    display: none;
+  }
 }

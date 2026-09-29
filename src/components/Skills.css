@@ -9,27 +9,7 @@
   left: var(--gutter);
   right: var(--gutter);
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--border-strong) 20%,
-    var(--border-strong) 80%,
-    transparent
-  );
-}
-
-/* Faint blueprint dot-grid behind the whole section so the area never
-   reads as flat/empty, even before the cards load in. */
-.skills::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(148, 197, 255, 0.14) 1px, transparent 1px);
-  background-size: 26px 26px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 75%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 75%);
-  pointer-events: none;
-  z-index: 0;
+  background: linear-gradient(90deg, transparent, var(--border-strong) 20%, var(--border-strong) 80%, transparent);
 }
 
 .skills .section-inner {
@@ -37,8 +17,6 @@
   z-index: 1;
 }
 
-/* ---------- Intro row: heading + lede on the left, a stat strip on
-   the right so the top of the section is already visually balanced. ---------- */
 .skills__intro {
   margin-top: 1rem;
   display: grid;
@@ -56,10 +34,12 @@
   display: flex;
   align-items: center;
   gap: 1.4rem;
-  padding: 1.1rem 1.6rem;
+  padding: 1.15rem 1.7rem;
   border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  background: linear-gradient(150deg, var(--surface), var(--surface-2));
+  border-radius: var(--r-lg);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   box-shadow: var(--shadow-s);
   white-space: nowrap;
 }
@@ -73,14 +53,14 @@
 
 .skills__stat-num {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--accent);
   line-height: 1;
 }
 
 .skills__stat-label {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-faint);
@@ -92,11 +72,8 @@
   background: var(--border-strong);
 }
 
-/* ---------- Card grid: one balanced card per category. Auto-fit keeps
-   two full-width columns on desktop (or one on narrow screens) with no
-   leftover dead track, and every card grows to fill its space. ---------- */
 .skills__groups {
-  margin-top: 2.25rem;
+  margin-top: 2.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 1.25rem;
@@ -108,34 +85,15 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.75rem;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-m);
-  background: linear-gradient(165deg, var(--surface) 0%, var(--surface-2) 100%);
-  box-shadow: var(--shadow-s);
-  transition: border-color 0.35s var(--ease), transform 0.3s var(--ease),
-    box-shadow 0.35s var(--ease);
+  gap: 1.6rem;
+  padding: 1.85rem;
+  border-radius: var(--r-lg);
+  transition: border-color 0.35s var(--ease), transform 0.35s var(--ease);
 }
 
 .skills__group:hover {
-  transform: translateY(-3px);
-  border-color: var(--accent-dim);
-  box-shadow: var(--shadow-glow);
-}
-
-/* Soft ambient light-blue wash in the corner of each card, purely
-   decorative — keeps the cards feeling lit rather than flat. */
-.skills__group-glow {
-  position: absolute;
-  top: -40%;
-  right: -25%;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--ambient-2) 0%, transparent 70%);
-  opacity: 0.1;
-  pointer-events: none;
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
 }
 
 .skills__group-head {
@@ -152,7 +110,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: var(--r-sm);
   color: var(--accent);
   background: var(--accent-soft);
   border: 1px solid var(--accent-soft-strong);
@@ -173,19 +131,18 @@
 .skills__group-core {
   font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--btn-primary-text);
-  background: linear-gradient(150deg, var(--accent-fill-hover), var(--accent-fill));
-  padding: 0.18rem 0.48rem;
-  border-radius: 999px;
+  letter-spacing: 0.03em;
+  color: var(--btn-text);
+  background: var(--btn-grad);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--r-pill);
 }
 
 .skills__group-label {
-  font-family: var(--font-body);
-  font-size: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   color: var(--text);
 }
 
@@ -198,18 +155,15 @@
 
 .skills__group-count {
   flex-shrink: 0;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--accent);
-  opacity: 0.75;
+  opacity: 0.85;
   padding: 0.3rem 0.55rem;
   border: 1px solid var(--border-strong);
-  border-radius: 999px;
+  border-radius: var(--r-pill);
 }
 
-/* Badges grow to fill the card width — a 2-item group splits the row
-   evenly instead of leaving a gap, so every card looks intentionally
-   full regardless of how many technologies it lists. */
 .skills__grid {
   position: relative;
   display: flex;
@@ -222,10 +176,10 @@
   align-items: center;
   gap: 0.65rem;
   flex: 1 1 150px;
-  padding: 0.7rem 0.9rem;
+  padding: 0.72rem 0.9rem;
   border: 1px solid var(--border);
-  border-radius: 11px;
-  background: rgba(148, 197, 255, 0.04);
+  border-radius: var(--r-md);
+  background: var(--glass);
   transition: border-color 0.3s var(--ease), background 0.3s var(--ease),
     transform 0.3s var(--ease);
 }
@@ -233,7 +187,7 @@
 .skills__badge:hover {
   transform: translateY(-2px);
   border-color: var(--ring, var(--border-strong));
-  background: rgba(148, 197, 255, 0.07);
+  background: var(--glass-strong);
 }
 
 .skills__badge-icon {
@@ -244,10 +198,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
   font-weight: 700;
-  border: 1px solid rgba(148, 197, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .skills__badge-name {
@@ -262,7 +216,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 @media (max-width: 900px) {
@@ -290,11 +244,11 @@
   }
 
   .skills__stat-num {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .skills__group {
-    padding: 1.4rem;
+    padding: 1.45rem;
   }
 
   .skills__badge {

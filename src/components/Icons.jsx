@@ -73,20 +73,20 @@ export const LogoMark = (props) => (
     <path
       d="M20 2 35 11v18L20 38 5 29V11Z"
       fill="url(#logoFill)"
-      stroke="var(--accent-dim)"
+      stroke="var(--accent)"
       strokeWidth="1"
     />
     <path
       d="M14.5 13v14M14.5 20.3 23 13M14.5 20.3 23 27"
-      stroke="#04101f"
+      stroke="#0d0b1a"
       strokeWidth="2.1"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <defs>
       <linearGradient id="logoFill" x1="5" y1="2" x2="35" y2="38" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="var(--accent-fill-hover)" />
-        <stop offset="100%" stopColor="var(--accent-dim)" />
+        <stop offset="0%" stopColor="var(--accent-hover)" />
+        <stop offset="100%" stopColor="var(--accent-2)" />
       </linearGradient>
     </defs>
   </svg>

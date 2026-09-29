@@ -9,13 +9,7 @@
   left: var(--gutter);
   right: var(--gutter);
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--border-strong) 20%,
-    var(--border-strong) 80%,
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--border-strong) 20%, var(--border-strong) 80%, transparent);
 }
 
 .projects__list {
@@ -27,11 +21,8 @@
 }
 
 .project-card {
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-m);
-  background: var(--surface);
+  border-radius: var(--r-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-s);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -42,28 +33,30 @@
 }
 
 .project-card:hover {
-  border-color: var(--project-accent, var(--accent-dim));
-  box-shadow: 0 0 0 1px var(--project-accent, var(--accent)),
-    0 22px 48px -20px var(--project-accent, var(--accent-glow));
+  border-color: var(--project-accent, var(--border-strong));
+  box-shadow: 0 0 0 1px var(--project-accent, var(--border-strong)),
+    0 26px 54px -22px var(--project-accent, var(--accent-glow));
 }
 
 .project-card__top-bar {
   display: block;
   height: 4px;
-  background: var(--project-accent, var(--accent-fill));
+  background: var(--project-accent, var(--accent));
   flex-shrink: 0;
 }
 
-/* Editor title-bar nod, also framing each project's signature color;
-   adapts with --bg like the rest of the theme. */
 .project-card__chrome {
   display: flex;
   align-items: center;
   gap: 0.45rem;
   padding: 0.8rem 1.15rem;
-  background: var(--bg);
+  background: rgba(0, 0, 0, 0.14);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+}
+
+:root[data-theme="light"] .project-card__chrome {
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .project-card__dot {
@@ -74,12 +67,12 @@
 }
 
 .project-card__dot--accent {
-  background: var(--project-accent, var(--accent-fill));
+  background: var(--project-accent, var(--accent));
 }
 
 .project-card__path {
   margin-left: 0.6rem;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.74rem;
   color: var(--text-faint);
   overflow: hidden;
@@ -88,7 +81,7 @@
 }
 
 .project-card__body {
-  padding: 1.6rem 1.5rem 1.75rem;
+  padding: 1.65rem 1.55rem 1.8rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -102,7 +95,9 @@
 }
 
 .project-card__heading h3 {
-  font-size: 1.28rem;
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  font-weight: 600;
   color: var(--text);
 }
 
@@ -113,7 +108,7 @@
 }
 
 .project-card__desc {
-  margin-top: 0.85rem;
+  margin-top: 0.9rem;
   color: var(--text-muted);
   line-height: 1.7;
   font-size: 0.95rem;
@@ -124,27 +119,27 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1.25rem;
+  margin-top: 1.3rem;
 }
 
 .project-card__stack li {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.74rem;
   color: var(--text-faint);
   padding: 0.28rem 0.6rem;
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .project-card__links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.6rem;
+  margin-top: 1.65rem;
 }
 
 .project-card__links .btn {
-  padding: 0.68rem 1.1rem;
+  padding: 0.68rem 1.15rem;
   font-size: 0.85rem;
 }
 

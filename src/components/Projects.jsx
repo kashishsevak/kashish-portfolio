@@ -8,7 +8,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="section projects">
-      <div ref={ref} className={`section-inner reveal ${visible ? "is-visible" : ""}`}>
+      <div ref={ref} className={`section-inner rise ${visible ? "is-visible" : ""}`}>
         <div className="eyebrow-index">
           <span className="idx">04</span>
           <span className="rule" />

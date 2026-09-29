@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import Backdrop from "./components/Backdrop";
 import TopNav from "./components/TopNav";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -21,6 +22,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <Backdrop />
       <CustomCursor />
       <ScrollProgress />
       <div className="page-frame">

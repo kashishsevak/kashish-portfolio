@@ -12,8 +12,19 @@ const SECTIONS = [
 
 export default function TopNav({ activeId }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [theme, toggleTheme] = useTheme();
   const headerRef = useRef(null);
+
+  // Purely cosmetic: the nav tightens into a smaller, more opaque pill
+  // once the page has scrolled a little, so it reads as "floating" over
+  // the hero at first and "docked" once content is underneath it.
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
 
   // Measure the header's real rendered height (it can change with font
   // scaling, wrapping, etc. across devices) and expose it as a CSS
@@ -53,7 +64,7 @@ export default function TopNav({ activeId }) {
   };
 
   return (
-    <header className="top-nav" ref={headerRef}>
+    <header className={`top-nav ${scrolled ? "is-scrolled" : ""}`} ref={headerRef}>
       <div className="top-nav__inner">
         <a href="#hero" className="top-nav__brand">
           <LogoMark className="top-nav__mark" aria-hidden="true" />

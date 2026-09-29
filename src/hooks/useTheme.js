@@ -26,7 +26,7 @@ export default function useTheme() {
 
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
-      meta.setAttribute("content", theme === "light" ? "#f3f7fd" : "#070b13");
+      meta.setAttribute("content", theme === "light" ? "#f7f5fc" : "#0d0b1a");
     }
   }, [theme]);
 

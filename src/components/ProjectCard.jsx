@@ -1,14 +1,26 @@
+import { useCallback } from "react";
 import { GitHubIcon, ExternalLinkIcon, UsersIcon } from "./Icons";
 import useTilt from "../hooks/useTilt";
+import useSpotlight from "../hooks/useSpotlight";
 
 export default function ProjectCard({ project, index }) {
   const { name, type, description, stack, github, live, accent } = project;
   const tiltRef = useTilt(3);
+  const spotRef = useSpotlight();
+  // Both hooks need the same DOM node, so merge their refs into one
+  // callback ref rather than choosing one over the other.
+  const setRefs = useCallback(
+    (node) => {
+      tiltRef.current = node;
+      spotRef.current = node;
+    },
+    [tiltRef, spotRef]
+  );
 
   return (
     <article
-      className="project-card"
-      ref={tiltRef}
+      className="project-card glass spot"
+      ref={setRefs}
       style={{ "--project-accent": accent }}
     >
       <span className="project-card__top-bar" />

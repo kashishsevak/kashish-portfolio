@@ -3,57 +3,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: clamp(6rem, 12vh, 9rem);
+  padding-top: clamp(7rem, 14vh, 10rem);
   padding-bottom: 5rem;
   position: relative;
   max-width: none;
   overflow: hidden;
-}
-
-/* Dual ambient glow mesh — electric blue upper-right, softer sky-blue
-   lower-left. Purely atmospheric: neither hue is used on any text,
-   border, or control directly, so the accent still reads as the
-   one interactive signal color on the page — both orbs simply stay
-   within the same blue family for depth. */
-.hero__glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.hero__glow::before,
-.hero__glow::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(10px);
-}
-
-.hero__glow::before {
-  top: -22%;
-  right: -14%;
-  width: min(62vw, 780px);
-  aspect-ratio: 1;
-  background: radial-gradient(
-    circle,
-    rgba(77, 163, 255, 0.22) 0%,
-    rgba(77, 163, 255, 0.07) 45%,
-    transparent 72%
-  );
-}
-
-.hero__glow::after {
-  bottom: -28%;
-  left: -16%;
-  width: min(48vw, 620px);
-  aspect-ratio: 1;
-  background: radial-gradient(
-    circle,
-    rgba(143, 224, 255, 0.16) 0%,
-    rgba(143, 224, 255, 0.05) 45%,
-    transparent 70%
-  );
 }
 
 .hero__grid,
@@ -67,41 +21,63 @@
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: clamp(2.5rem, 6vw, 5rem);
   align-items: center;
-  max-width: 1240px;
+  max-width: var(--max);
+}
+
+/* Shared load-in treatment for everything that isn't the headline itself
+   (which uses the word-mask .split/.sw system below). One easing curve,
+   staggered purely through the --d custom property set inline. */
+.hero__pop {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.hero__pop.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 .hero__kicker {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   color: var(--accent);
-  font-weight: 600;
-  margin-bottom: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-bottom: 1.6rem;
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
+  padding: 0.45rem 0.95rem 0.45rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: var(--glass);
+  border: 1px solid var(--border);
 }
 
-.hero__kicker::before {
-  content: "";
+.hero__kicker-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px 2px var(--accent-glow);
+  background: var(--aqua);
+  box-shadow: 0 0 10px 2px var(--aqua);
+  flex-shrink: 0;
 }
 
 .hero__name {
-  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
-  line-height: 1.08;
+  font-size: clamp(2.7rem, 6vw, 4.9rem);
+  line-height: 1.05;
   max-width: 15ch;
-  background: var(--hero-name-gradient);
+}
+
+.hero__name-line {
+  background: var(--headline-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .hero__intro {
-  margin-top: 1.75rem;
+  margin-top: 1.85rem;
   max-width: 46ch;
   color: var(--text-muted);
   font-size: 1.08rem;
@@ -112,7 +88,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 2.5rem;
+  margin-top: 2.6rem;
 }
 
 .hero__photo-wrap {
@@ -125,17 +101,12 @@
   justify-content: center;
 }
 
-/* The ring exactly fills the wrap (instead of being sized off a
-   separate formula), so it can never end up larger than its container
-   or drift out of sync with the photo underneath it. Thicker border +
-   a shorter rotation cycle keep the spin clearly perceptible without
-   feeling frantic. */
 .hero__ring--dashed {
   position: absolute;
   inset: 0;
   border-radius: 50%;
   border: 3px dashed var(--border-strong);
-  animation: ring-spin 22s linear infinite;
+  animation: ring-spin 26s linear infinite;
   will-change: transform;
   pointer-events: none;
 }
@@ -155,19 +126,13 @@
   aspect-ratio: 1;
   border-radius: 50%;
   padding: 4px;
-  background: conic-gradient(
-    from 180deg,
-    var(--accent-fill) 0deg,
-    transparent 110deg,
-    transparent 250deg,
-    var(--accent-fill) 360deg
-  );
+  background: conic-gradient(from 180deg, var(--accent) 0deg, transparent 110deg, transparent 250deg, var(--accent) 360deg);
   box-shadow: var(--shadow-m);
 }
 
 .hero__photo,
 .hero__photo-fallback {
-  border: 5px solid var(--bg-soft);
+  border: 5px solid var(--bg);
   box-sizing: border-box;
 }
 
@@ -187,10 +152,10 @@
   justify-content: center;
   border-radius: 50%;
   font-family: var(--font-display);
-  font-style: italic;
+  font-weight: 700;
   font-size: 3.4rem;
   color: var(--accent);
-  background: linear-gradient(155deg, var(--surface-2), var(--bg-soft));
+  background: linear-gradient(155deg, var(--bg-3), var(--bg-2));
 }
 
 .hero__chip {
@@ -198,12 +163,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--glass-chip);
-  backdrop-filter: blur(10px);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-s);
   padding: 0.5rem 0.95rem;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   font-size: 0.8rem;
   color: var(--text-muted);
   white-space: nowrap;
@@ -213,7 +179,7 @@
   top: 6%;
   right: 4%;
   color: var(--accent);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   animation: chip-float 6s ease-in-out infinite;
 }
 
@@ -221,40 +187,26 @@
   bottom: 4%;
   left: 50%;
   transform: translateX(-50%);
-  animation: chip-float 6s ease-in-out infinite 0.4s;
+  animation: chip-float-x 6s ease-in-out infinite 0.4s;
 }
 
 .hero__chip-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px 2px var(--accent-glow);
+  background: var(--aqua);
+  box-shadow: 0 0 8px 2px var(--aqua);
   flex-shrink: 0;
 }
 
 @keyframes chip-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-.hero__chip--bottom {
-  animation-name: chip-float-x;
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes chip-float-x {
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(-6px);
-  }
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
 }
 
 .hero__scroll {
@@ -279,13 +231,6 @@
     text-align: left;
   }
 
-  /* Sized as its own value (not inherited from the desktop rule) and
-     given real top/bottom margin instead of padding, so the ring's
-     full circle — plus the floating chips — has guaranteed clear
-     space and can't overlap the heading above or the intro text
-     below. Comfortably larger than the desktop-derived size would be,
-     while staying well clear of the viewport edge at every phone
-     width down to the smallest breakpoint below. */
   .hero__photo-wrap {
     order: -1;
     width: min(340px, 82vw);
@@ -308,9 +253,6 @@
   }
 }
 
-/* Smallest phones: still sized generously, just trimmed enough that
-   the wrap (and the "MERN" chip inside it) always has verified clear
-   space to the screen edge. */
 @media (max-width: 380px) {
   .hero__photo-wrap {
     width: min(300px, 80vw);

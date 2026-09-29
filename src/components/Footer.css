@@ -1,8 +1,7 @@
 .footer {
   position: relative;
-  padding: 2.25rem var(--gutter) 2.5rem;
+  padding: 2.5rem var(--gutter) 2.75rem;
   max-width: none;
-  background: var(--bg-soft);
   color: var(--text);
 }
 
@@ -13,13 +12,7 @@
   left: var(--gutter);
   right: var(--gutter);
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--accent-soft-strong) 30%,
-    var(--accent-soft-strong) 70%,
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--border-strong) 30%, var(--border-strong) 70%, transparent);
 }
 
 .footer__inner {
@@ -27,7 +20,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
-  max-width: 1400px;
+  max-width: var(--max);
   margin: 0 auto;
   color: var(--text-faint);
   font-size: 0.85rem;

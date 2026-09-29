@@ -9,13 +9,7 @@
   left: var(--gutter);
   right: var(--gutter);
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--border-strong) 20%,
-    var(--border-strong) 80%,
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--border-strong) 20%, var(--border-strong) 80%, transparent);
 }
 
 .contact__grid {
@@ -31,7 +25,7 @@
 }
 
 .contact__cta {
-  margin-top: 2.25rem;
+  margin-top: 2.35rem;
 }
 
 .contact__list {
@@ -47,10 +41,10 @@
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  padding: 1.15rem;
+  padding: 1.2rem;
   border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  border-radius: var(--r-md);
+  background: var(--glass);
   transition: border-color 0.3s var(--ease), background 0.3s var(--ease),
     transform 0.3s var(--ease);
   height: 100%;
@@ -58,8 +52,8 @@
 
 a.contact__row:hover {
   transform: translateY(-3px);
-  border-color: var(--accent-dim);
-  background: var(--accent-soft);
+  border-color: var(--border-strong);
+  background: var(--glass-strong);
 }
 
 .contact__row-icon {
@@ -73,13 +67,13 @@ a.contact__row:hover {
   color: var(--text-muted);
   flex-shrink: 0;
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
+    background 0.3s var(--ease);
 }
 
 a.contact__row:hover .contact__row-icon {
-  color: var(--accent);
+  color: var(--text);
   border-color: var(--accent);
-  box-shadow: 0 0 14px 2px var(--accent-glow);
+  background: var(--accent-soft);
 }
 
 .contact__row-text {
